@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Interactive educational demonstration of adaptive Zero Trust access decisions with distance-based anomaly detection." />
+  <title>TrustLens | Adaptive Zero Trust Research Prototype</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
+  <script type="module" src="./src/main.js"></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark"><svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M18 3.5 30 8v9.3c0 7.3-4.6 12.4-12 15.3C10.6 29.7 6 24.6 6 17.3V8L18 3.5Z" stroke="currentColor" stroke-width="2.1"/><path d="m11.6 18 4.4 4.4 8.8-9.1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="brand-text">Trust<span>Lens</span><small>RESEARCH PROTOTYPE</small></div></div>
+      <div class="header-right"><span class="pulse"><i></i> LOCAL SIMULATION</span><a class="github-link" href="https://github.com/new" target="_blank" rel="noopener noreferrer">Publish to GitHub ↗</a></div>
+    </header>
+    <main>
+      <section class="intro"><div class="eyebrow"><span class="diamond">◆</span> CYBERSECURITY / MACHINE LEARNING <span class="version">DEMO v1.0</span></div><h1>Adaptive trust.<br /><em>Intelligent decisions.</em></h1><p>An interactive Zero Trust proof-of-concept combining a <strong>k-nearest-neighbour anomaly baseline</strong> with explainable access-policy signals. Explore how changing session context affects trust and access decisions.</p><div class="quick-stats"><div><strong>240</strong><span>Synthetic baseline events</span></div><div><strong>5-NN</strong><span>Distance-based detector</span></div><div><strong>3</strong><span>Adaptive access outcomes</span></div></div></section>
+      <div class="workspace-heading"><div><span class="eyebrow muted">LIVE EXPERIMENT</span><h2>Trust evaluation workspace</h2></div><span class="last-updated">Updated: <span id="generatedTime">—</span></span></div>
+      <section class="workspace">
+        <div class="panel inputs-panel"><div class="panel-top"><div><span class="step">01 / INPUT</span><h3>Session context</h3><p>Adjust the signals to simulate access behavior.</p></div><span class="panel-icon">◈</span></div><p class="field-kicker">TRY A SCENARIO</p><div class="scenarios"><button data-scenario="normal" class="scenario active" aria-pressed="true"><span class="scenario-dot green"></span>Routine</button><button data-scenario="suspicious" class="scenario" aria-pressed="false"><span class="scenario-dot yellow"></span>Unusual</button><button data-scenario="critical" class="scenario" aria-pressed="false"><span class="scenario-dot pink"></span>High risk</button></div><div class="divider"></div>
+          <div class="sliders">
+            <div class="field"><label for="hour">Access hour <output id="hourValue">11:00</output></label><input id="hour" type="range" min="0" max="23" step="1" value="11"><div class="bounds"><span>00:00</span><span>23:00</span></div></div>
+            <div class="field"><label for="failures">Failed logins <output id="failuresValue">0</output></label><input id="failures" type="range" min="0" max="12" step="1" value="0"><div class="bounds"><span>0 attempts</span><span>12 attempts</span></div></div>
+            <div class="field"><label for="requestsPerMinute">Request activity <output id="requestsPerMinuteValue">18 / min</output></label><input id="requestsPerMinute" type="range" min="0" max="500" step="1" value="18"><div class="bounds"><span>0 / min</span><span>500 / min</span></div></div>
+            <div class="field"><label for="outboundMB">Outbound transfer <output id="outboundMBValue">15 MB</output></label><input id="outboundMB" type="range" min="0" max="1000" step="5" value="15"><div class="bounds"><span>0 MB</span><span>1000 MB</span></div></div>
+            <div class="field"><label for="geoNovelty">Location novelty <output id="geoNoveltyValue">4%</output></label><input id="geoNovelty" type="range" min="0" max="1" step="0.01" value="0.04"><div class="bounds"><span>Familiar</span><span>Unfamiliar</span></div></div>
+            <div class="field"><label for="deviceRisk">Device posture risk <output id="deviceRiskValue">5%</output></label><input id="deviceRisk" type="range" min="0" max="1" step="0.01" value="0.05"><div class="bounds"><span>Managed</span><span>High risk</span></div></div>
+          </div>
+          <label class="switch-row" for="sensitiveResource"><div><strong>Sensitive resource</strong><span>Apply greater policy scrutiny</span></div><input type="checkbox" id="sensitiveResource" role="switch" /><span class="switch-ui" aria-hidden="true"></span></label>
+        </div>
+        <div class="panel output-panel"><div class="panel-top"><div><span class="step">02 / EVALUATION</span><h3>Adaptive access decision</h3><p>Real-time scores from synthetic behavior patterns.</p></div><span class="panel-icon">⬡</span></div>
+          <div class="trust-module"><div id="gauge" class="gauge" style="--score:99"><div class="gauge-inner"><div class="gauge-label">TRUST SCORE</div><div class="gauge-number" id="trustValue">99</div><span>out of 100</span></div></div><div class="trust-meaning"><span class="eyebrow muted">POLICY OUTCOME</span><div id="decision" class="decision allow">ALLOW</div><p id="decisionDetail">Access granted under baseline controls.</p><span class="simulation-tag">● Model simulation</span></div></div>
+          <div class="score-grid"><div class="score-card"><span>COMPOSITE RISK</span><strong id="riskValue">1</strong><small>Higher indicates greater risk</small></div><div class="score-card"><span>ANOMALY SIGNAL</span><strong id="anomalyValue">0</strong><div class="mini-track"><i id="anomalyBar"></i></div></div><div class="score-card wide"><div class="wide-head"><span>POLICY INDICATORS</span><strong id="policyValue">2</strong></div><div class="mini-track"><i id="policyBar"></i></div></div></div>
+          <div class="signals"><div class="signals-head"><h4>Decision explanation</h4><span>RULE SIGNALS</span></div><ul id="signalList" class="signal-list"></ul></div><button id="exportButton" class="export-button">↓ Export current assessment as JSON</button>
+        </div>
+      </section>
+      <section class="info-grid"><div class="info-card"><div class="info-icon">01</div><h3>How anomaly scoring works</h3><p>Session features are compared with 240 deterministically generated normal sessions. A 5-nearest-neighbour distance is measured against a synthetic baseline distribution.</p></div><div class="info-card"><div class="info-icon">02</div><h3>Transparent policy decisions</h3><p>The anomaly signal is combined with interpretable policy flags, producing a trust score and one of three actions: allow, require step-up MFA, or block.</p></div><div class="info-card"><div class="info-icon">03</div><h3>Research limitations</h3><p>This is an educational proof-of-concept, not a validated intrusion detector. All behavior is synthetic; scores are not probabilities, and no live access is enforced.</p></div></section>
+    </main>
+    <footer><span>TrustLens · Adaptive Zero Trust educational prototype · 2026</span><span>Local-only · No account data collected · No external APIs</span></footer>
+  </div>
+</body>
+</html>
